@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE 	mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0 //EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 매퍼의 네임스페이스 지정 :  매퍼와 XML 쿼리를 매칭해서 사용하려면 매퍼인터페이스의 경로,매서드 이름 = 쿼리의 이름  -->
+<!-- BoardMapper 인터페이스에 있는 selectBoardList에서 selectBoardList이름의 쿼리와 매핑하기 위해서는 mapper의 전체경로가 필요  -->
+<mapper namespace="board.board.mapper.BoardMapper"> 
+<!--  -->
+	<select id = "selectBoardList" resultType = " board.dto.BoardDto">
+	
+	<![CDATA[
+		SELECT
+			board_idx,
+			title,
+			hit_cnt,
+			created_datetime
+		FROM
+			t_board
+		WHERE
+			deleted_yn = 'N'
+		ORDER BY board_idx DESC
+	
+	]]>
+	
+	</select>
+
+</mapper>

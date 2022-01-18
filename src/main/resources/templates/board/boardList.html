@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!-- thymeleaf의 th속성을 사용하기 위한 네임스페이스 선언 -->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>board</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <div class="container">
+    	<h2>게시글 목록</h2>
+    	<table class="board_list">
+	        <colgroup>
+	            <col width="15%"/>
+	            <col width="*"/>
+	            <col width="15%"/>
+	            <col width="20%"/>
+	        </colgroup>
+	        <thead>
+	            <tr>
+	                <th scope="col">글번호</th>
+	                <th scope="col">제목</th>
+	                <th scope="col">조회수</th>
+	                <th scope="col">작성일</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	        	<tr th:if="${#lists.size(list)} > 0" th:each="list : ${list}"><!--조회된 목록이 하나라도 있을 경우  보여줌   -->
+	        	<!--  list변수를 통해서 서버에서 전달된 데이터에 접근해서  화면에 표시. -->
+	        	<!-- th:eacj는 목록과 같이 반복되는 데이터를 화면에 표시하는데 사용. 컨트롤러에서 전달 받은 데이터를 ${변수} 형식으로 
+	        	사용할수 있음. 컨트롤러에서 뷰로 데이터를 전달하기 위해서 addObject 매서드 사용 : list라는 이름을 데이터를 저장 
+	        	 -> 컨트롤러에서 전달된 list 라는 데이터를 뷰에서는 ${list}로 이용
+	        	list: ${list}  앞의 list라는 이름으로 반복되는 데이터에 접근 
+	        	list변수는 each가 선언된 <tr> 테그 내에서만 접근-->
+	        		<td th:text="${list.boardIdx}"></td>
+	        		<td class="title"><a href="/board/openBoardDetail.do?boardIdx=" th:attrappend="href=${list.boardIdx}" th:text="${list.title}"></a></td>
+	        		<td th:text="${list.hitCnt}"></td>
+	        		<td th:text="${list.createdDatetime}"></td>
+	        	</tr> 
+	        	<!-- 조회된 목록이 없을 경우 나오는 결과 -->
+	        	<tr th:unless="${#lists.size(list)} > 0">
+	        		<td colspan="4">조회된 결과가 없습니다.</td>
+	        	</tr>
+	        </tbody>
+	    </table>
+	    <a href="/board/openBoardWrite.do" class="btn">글 쓰기</a>
+    </div>
+</body>
+</html>
